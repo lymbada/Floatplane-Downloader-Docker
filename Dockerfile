@@ -12,8 +12,11 @@ RUN git clone https://github.com/Inrixia/Floatplane-Downloader.git /Floatplane-D
 && npm install \
 && npm audit fix
 
-VOLUME /Floatplane-Downloader/videos
+COPY ./run.sh /Floatplane-Downloader/
 
-ENTRYPOINT node /Floatplane-Downloader/float.js
+VOLUME /Floatplane-Downloader/videos
+VOLUME /Floatplane-Downloader/config
+
+ENTRYPOINT /Floatplane-Downloader/run.sh
 WORKDIR /Floatplane-Downloader
-CMD node float.js
+CMD /Floatplane/run.sh
