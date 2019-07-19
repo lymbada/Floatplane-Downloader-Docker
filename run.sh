@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Running run.sh startup script"
-declare -a configFiles=("broken.json" "float.log" "videos.json.backup" "videos.json" "partial.json" "settings.json")
+declare -a configFiles=("settings.json" "broken.json" "float.log" "videos.json.backup" "videos.json" "partial.json")
 configDirectory="/Floatplane-Downloader/config"
 
 # Setup the config directory, if not already created. This allows for out-of-docker testing
@@ -15,14 +15,21 @@ do
 	if [ ! -f $configDirectory/${configFiles[$i-1]} ]; then
 		# currently the settings files do not exist, they need to be copied over
 		if [ ! -f "/Floatplane-Downloader/${configFiles[$i-1]}" ]; then
-			echo "Missing critical file '/Floatplane-Downloader/${configFiles[$i-1]}', you'l need this to run"
-
+			echo "Missing critical file '/Floatplane-Downloader/${configFiles[$i-1]}', you'l need this to run, creating it now"
+			#echo "{}" > $configDirectory/${configFiles[$i-1]}
+			ln -s $configDirectory/${configFiles[$i-1]} "/Floatplane-Downloader/${configFiles[$i-1]}"
 		else
 
 			# file exists, but not in the config directory; then link it back
 			mv "/Floatplane-Downloader/${configFiles[$i-1]}" $configDirectory/${configFiles[$i-1]}
 			ln -s $configDirectory/${configFiles[$i-1]} "/Floatplane-Downloader/${configFiles[$i-1]}"
 		fi
+	else
+		# the file already exists in the config, so remove the local and link it
+		if [ -f "/Floatplane-Downloader/${configFiles[$i-1]}" ]; then
+			rm "/Floatplane-Downloader/${configFiles[$i-1]}"
+		fi
+		ln -s $configDirectory/${configFiles[$i-1]} "/Floatplane-Downloader/${configFiles[$i-1]}"
 	fi
 
   #echo $i " / " ${arraylength} " : " ${array[$i-1]}
