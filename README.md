@@ -17,4 +17,4 @@ While the initial script from Inrixia does do some auth, this is not (currently)
 Well this is only an initial build, currently the container runs, but you do need to manually configure the internal 'settings.json' file, because the commandline prompting doesn't work.
 
 ## Version
-Autobuild should have the latest build at the time that the particular last update was made. Versions are also supported where the GitHub tag = "version-(version)"
+Autobuild should have the latest build at the time that the particular last update was made. Versions are also supported where the GitHub tag = "version-(version)".
