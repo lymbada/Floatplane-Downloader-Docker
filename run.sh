@@ -50,6 +50,5 @@ do
 done
 }
 copy_config_files
-
-trap exit_script 2 15 SIGINT SIGTERM
+trap exit_script 2 15 SIGKILL SIGINT SIGTERM INT
 node float.js

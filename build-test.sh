@@ -16,4 +16,4 @@ docker run --rm \
 -v /tmp/fp/videos:/Floatplane-Downloader/videos \
 --name=testFP \
 -it \
-fp:test1
+fp:test1 \
