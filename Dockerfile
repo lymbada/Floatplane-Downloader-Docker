@@ -6,16 +6,24 @@ MAINTAINER Matt T <lymbada@outlook.com>
 RUN apt-get update && apt-get install -y ffmpeg \
  && apt-get clean && apt-get autoremove --yes && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install / configure FloatPlane Script
-RUN git clone https://github.com/Inrixia/Floatplane-Downloader.git /Floatplane-Downloader \
-&& cd /Floatplane-Downloader \
-&& npm install \
-&& npm audit fix
+# Download the FP installer
+RUN git clone https://github.com/Inrixia/Floatplane-Downloader.git /FP-Install \
+&& mkdir /Floatplane-Downloader/ \
+&& cp /FP-Install/releases/installers/* /Floatplane-Downloader/. \
+&& rm -r /FP-Install
 
-COPY ./run.sh /Floatplane-Downloader/
+# Use included installer
+WORKDIR /Floatplane-Downloader
+RUN npm install && npm audit fix 
+RUN node install.js \
+&& npm update \
+&& rm install.js && rm install.bat
+RUN cp -r ./node_modules/m3u8stream/dist ./node_modules/m3u8stream/lib
 
 VOLUME /Floatplane-Downloader/videos
 VOLUME /Floatplane-Downloader/config
+
+COPY ./run.sh /Floatplane-Downloader/
 
 ENTRYPOINT /Floatplane-Downloader/run.sh
 WORKDIR /Floatplane-Downloader

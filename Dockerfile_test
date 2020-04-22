@@ -17,6 +17,6 @@ COPY ./run.sh /Floatplane-Downloader/
 VOLUME /Floatplane-Downloader/videos
 VOLUME /Floatplane-Downloader/config
 
-#ENTRYPOINT /Floatplane-Downloader/run.sh
+ENTRYPOINT /Floatplane-Downloader/run.sh
 WORKDIR /Floatplane-Downloader
 CMD /bin/bash

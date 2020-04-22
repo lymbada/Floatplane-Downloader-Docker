@@ -10,9 +10,10 @@ then
 fi
 
 
-docker build --tag fp:test1 --file $DOCKERFILE . &&
+docker build --tag fp:test1 --file $DOCKERFILE --no-cache . &&
 docker run --rm \
 -v /tmp/fp/config:/Floatplane-Downloader/config \
 -v /tmp/fp/videos:/Floatplane-Downloader/videos \
+--name=testFP \
 -it \
 fp:test1
